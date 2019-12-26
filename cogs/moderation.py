@@ -18,11 +18,11 @@ class Moderation(commands.Cog):
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason=None):
         """
-        Kicks a user and dms a reason
+        Kicks a user and dms the reason
         """
         msg = "You have been kicked from snootyboop land"
         if reason:
-            msg += f" for `{reason}`"
+            msg += f" for {reason}"
 
         try:
             await member.send(msg)
@@ -36,6 +36,29 @@ class Moderation(commands.Cog):
     async def do_repeat_handler(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("You didn't give me a member to kick!")
+    
+    @commands.command()
+    @commands.has_permissions(ban_members=True)
+    async def ban(self, ctx, member: discord.Member, *, reason=None):
+        """
+        Bans a user and dms the reason
+        """
+        msg = "You have been banned from snootyboop land"
+        if reason:
+            msg += f" for {reason}"
+
+        try:
+            await member.send(msg)
+        except discord.Forbidden:
+            await ctx.send("I can't dm that user")
+
+        await ctx.send(f'{member.name}#{member.discriminator} has been banned!')
+        await member.ban(reason=reason)
+    
+    @ban.error
+    async def do_repeat_handler(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("You didn't give me a member to ban!")
 
 def setup(client):
     client.add_cog(Moderation(client))
