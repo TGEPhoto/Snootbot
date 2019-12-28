@@ -24,5 +24,5 @@ class Love(commands.Cog):
             await ctx.send(random.choice(f.readlines()))
 
 
-def setup(client):
-    client.add_cog(Love(client))
+def setup(bot):
+    bot.add_cog(Love(bot))
