@@ -12,13 +12,17 @@ class Moderation(commands.Cog):
     async def purge(self, ctx, amount=2):
         """Deletes given amount of messages
         """
-        await ctx.channel.purge(limit=amount)
+
+        deleted = await ctx.channel.purge(limit=amount)
+        await ctx.send(f'Deleted {len(deleted)} messages by '
+                       f'{", ".join({f"{message.author.name}#{message.author.discriminator}" for message in deleted})}')
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason=None):
         """Kicks a user and dms the reason
         """
+
         msg = "You have been kicked from snootyboop land"
         if reason:
             msg += f" for {reason}"
