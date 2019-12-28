@@ -3,11 +3,11 @@ import os
 from keys import bot as BOT_TOKEN
 from discord.ext import commands
 
-client = commands.Bot(command_prefix = "/", owner_ids=[611540017000480773])
+client = commands.Bot(command_prefix = "+", owner_ids=[611540017000480773])
 
 @client.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.online, activity=discord.Game('Use /help'))
+    await client.change_presence(status=discord.Status.online, activity=discord.Game('use +help'))
     print('Bot is online.')
 
 @client.command()
